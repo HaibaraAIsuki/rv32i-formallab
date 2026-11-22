@@ -1,0 +1,32 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "ALU: Lint",
+      "type": "shell",
+      "command": "make lint",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "ALU: Simulate",
+      "type": "shell",
+      "command": "make sim-alu",
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "ALU: Formal prove",
+      "type": "shell",
+      "command": "make formal-alu",
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "Environment: Check",
+      "type": "shell",
+      "command": "make doctor",
+      "problemMatcher": []
+    }
+  ]
+}
