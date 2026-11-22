@@ -1,0 +1,41 @@
+name: RTL + Formal
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  alu:
+    name: ALU lint / simulation / formal
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install OSS CAD Suite
+        uses: YosysHQ/setup-oss-cad-suite@v4
+        with:
+          github-token: ${{ github.token }}
+      - name: Tool versions
+        run: |
+          verilator --version
+          yosys -V
+          sby --version
+          boolector --version
+      - name: Lint
+        run: make lint
+      - name: Directed ALU simulation
+        run: make sim-alu
+      - name: ALU formal properties
+        run: make formal-alu
+      - name: Preserve formal logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: alu-formal-debug
+          path: build/alu_formal/
+          if-no-files-found: ignore
