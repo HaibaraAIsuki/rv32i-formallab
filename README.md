@@ -34,6 +34,19 @@ The initial target is a simple **single-cycle** educational design (no pipeline,
 
 On Ubuntu, the [OSS CAD Suite](https://github.com/YosysHQ/oss-cad-suite-build) is a convenient option for Yosys/SymbiYosys/solvers. Ensure `verilator` and `sby` are on your `PATH`.
 
+## Quick start (Ubuntu 24.04)
+
+Follow the [step-by-step Ubuntu setup guide](docs/ubuntu-setup.md). After cloning, use:
+
+```bash
+bash scripts/setup-ubuntu.sh
+# Install OSS CAD Suite following docs/ubuntu-setup.md
+make doctor
+make test
+```
+
+VS Code tasks are available under **Terminal → Run Task**. The [RTL + Formal GitHub Actions workflow](.github/workflows/rtl-formal.yml) is configured to run lint, simulation, and formal checks on pushes and pull requests. Check the Actions tab for actual outcomes; a configured workflow does not mean that any check has passed.
+
 ## Start with the ALU
 
 Clone:
