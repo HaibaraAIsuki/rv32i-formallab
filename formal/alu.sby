@@ -1,3 +1,5 @@
+# Run from repository root via: make formal-alu
+# SBY copies the [files] basenames into its own src/ directory.
 [options]
 mode prove
 depth 1
@@ -6,7 +8,7 @@ depth 1
 smtbmc boolector
 
 [script]
-read -formal -sv rtl/alu.sv formal/alu_properties.sv
+read -formal -sv alu.sv alu_properties.sv
 prep -top alu_properties
 
 [files]
