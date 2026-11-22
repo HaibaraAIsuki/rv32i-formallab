@@ -1,0 +1,14 @@
+# Simulation/build artifacts
+build/
+obj_dir/
+*.vcd
+*.fst
+*.log
+*.jou
+*.wdb
+*.fst.hier
+__pycache__/
+.pytest_cache/
+.venv/
+*.pyc
+.DS_Store
