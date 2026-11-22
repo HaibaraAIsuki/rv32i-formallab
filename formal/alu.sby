@@ -1,0 +1,14 @@
+[options]
+mode prove
+depth 1
+
+[engines]
+smtbmc boolector
+
+[script]
+read -formal -sv rtl/alu.sv formal/alu_properties.sv
+prep -top alu_properties
+
+[files]
+rtl/alu.sv
+formal/alu_properties.sv
