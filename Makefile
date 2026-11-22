@@ -1,7 +1,11 @@
 VERILATOR ?= verilator
 SBY ?= sby
+BASH ?= bash
 
-.PHONY: lint sim-alu formal-alu clean
+.PHONY: doctor lint sim-alu formal-alu test clean
+
+doctor:
+	$(BASH) scripts/check-env.sh
 
 lint:
 	$(VERILATOR) --lint-only -Wall --top-module alu rtl/alu.sv
@@ -12,6 +16,8 @@ sim-alu:
 
 formal-alu:
 	$(SBY) -f -d build/alu_formal formal/alu.sby
+
+test: lint sim-alu formal-alu
 
 clean:
 	rm -rf build
