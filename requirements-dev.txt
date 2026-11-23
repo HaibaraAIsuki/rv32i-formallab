@@ -1,0 +1,4 @@
+# Python-side simulation/testing environment; RTL testbench is currently SystemVerilog.
+# Pin the major release line to minimize API surprises while learning.
+cocotb>=2.1,<3
+pytest>=8,<10
