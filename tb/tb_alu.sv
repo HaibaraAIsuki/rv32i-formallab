@@ -20,6 +20,9 @@ module tb_alu;
     endtask
 
     initial begin
+        $dumpfile("build/alu.vcd");
+        $dumpvars(0, tb_alu);
+
         check(32'hffffffff, 32'd1, 4'd0, 32'd0); // wraparound ADD
         check(32'd0, 32'd1, 4'd1, 32'hffffffff); // SUB
         check(32'hf0f0, 32'h0ff0, 4'd2, 32'h00f0); // AND
