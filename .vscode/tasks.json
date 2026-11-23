@@ -2,6 +2,18 @@
   "version": "2.0.0",
   "tasks": [
     {
+      "label": "Setup: Install full Ubuntu toolchain",
+      "type": "shell",
+      "command": "bash scripts/setup-ubuntu.sh",
+      "problemMatcher": []
+    },
+    {
+      "label": "Environment: Doctor",
+      "type": "shell",
+      "command": "make doctor",
+      "problemMatcher": []
+    },
+    {
       "label": "ALU: Lint",
       "type": "shell",
       "command": "make lint",
@@ -9,10 +21,16 @@
       "problemMatcher": []
     },
     {
-      "label": "ALU: Simulate",
+      "label": "ALU: Simulate + VCD",
       "type": "shell",
       "command": "make sim-alu",
       "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "ALU: Open GTKWave",
+      "type": "shell",
+      "command": "make wave-alu",
       "problemMatcher": []
     },
     {
@@ -23,9 +41,19 @@
       "problemMatcher": []
     },
     {
-      "label": "Environment: Check",
+      "label": "RISC-V: Assemble smoke test",
       "type": "shell",
-      "command": "make doctor",
+      "command": "make toolchain-check",
+      "problemMatcher": []
+    },
+    {
+      "label": "ALL: Lint + Simulation + Formal",
+      "type": "shell",
+      "command": "make test",
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
       "problemMatcher": []
     }
   ]
