@@ -11,31 +11,40 @@ permissions:
 
 jobs:
   alu:
-    name: ALU lint / simulation / formal
+    name: ALU lint / simulation / formal / toolchain
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - name: Install OSS CAD Suite
         uses: YosysHQ/setup-oss-cad-suite@v4
         with:
           github-token: ${{ github.token }}
+      - name: Install RISC-V cross compiler
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-riscv64-unknown-elf binutils-riscv64-unknown-elf
       - name: Tool versions
         run: |
           verilator --version
           yosys -V
           sby --version
           boolector --version
+          riscv64-unknown-elf-gcc --version
       - name: Lint
         run: make lint
-      - name: Directed ALU simulation
+      - name: Directed ALU simulation and waveform
         run: make sim-alu
       - name: ALU formal properties
         run: make formal-alu
-      - name: Preserve formal logs on failure
+      - name: RV32I assembler smoke test
+        run: make toolchain-check
+      - name: Preserve debug files on failure
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: alu-formal-debug
-          path: build/alu_formal/
+          name: starter-checks-debug
+          path: |
+            build/alu_formal/
+            build/alu.vcd
           if-no-files-found: ignore
