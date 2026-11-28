@@ -1,4 +1,4 @@
-/* Assembler smoke test only: the CPU core cannot run this yet. */
+/* Single-cycle core smoke test. The final jump loops at _start + 16. */
     .section .text
     .globl _start
 _start:

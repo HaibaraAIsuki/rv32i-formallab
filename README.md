@@ -2,7 +2,7 @@
 
 > Learn RISC-V microarchitecture and formal verification by building a small RV32I processor from scratch.
 
-**Status:** Learning project / work in progress. The only RTL implemented initially is a combinational ALU; **this is not yet an RV32I CPU**. No formal or simulation run is claimed until it has been executed and documented.
+**Status:** The single-cycle core executes ADDI, ADD, SUB and JAL using the integer ALU and a combinational instruction-memory port. The smoke test checks the PC and register file after each instruction. The formal checks cover the ALU.
 
 ## Goals
 
@@ -15,7 +15,7 @@
 ## Roadmap
 
 - [x] Create the public repository.
-- [ ] **Stage 1 — ALU:** implement arithmetic/logic, test edge cases, and prove combinational properties.
+- [x] **Stage 1 — ALU:** implement arithmetic/logic, test edge cases, and prove combinational properties.
 - [ ] **Stage 2 — Datapath:** register file, instruction decoder, immediate generator, PC, and memory interface.
 - [ ] **Stage 3 — RV32I:** gradually implement arithmetic, branches/jumps, and loads/stores.
 - [ ] **Stage 4 — Module formal:** properties for x0, PC, branches, alignment, and byte enables.
@@ -55,11 +55,16 @@ In the VS Code terminal or via **Terminal → Run Task**:
 ```bash
 make doctor            # check installed dependencies
 make test              # lint + RTL simulation + ALU formal
+make sim-cpu           # execute sw/asm/alu_smoke.S on the single-cycle RTL
 make wave-alu          # generate wave and open GTKWave
 make toolchain-check   # assemble a small RV32I example
 ```
 
 [GitHub Actions](.github/workflows/rtl-formal.yml) runs starter checks on PRs and pushes. **Check the real Actions results**; a committed workflow is not proof of passing tests.
+
+## Run the single-cycle core
+
+`make sim-cpu` assembles and links `sw/asm/alu_smoke.S` at the reset address `0x80000000`, then loads its text into the testbench instruction memory. The core writes 5, 7, 12 and 7 to x1 through x4. The final JAL leaves x0 at zero and the PC at `0x80000010`. The testbench prints the trace and checks all 32 registers after each clock edge that executes an instruction.
 
 ## Start with the ALU
 
@@ -83,12 +88,12 @@ The formal entry point is `formal/alu.sby`; it checks combinational properties o
 ## Repository layout
 
 ```text
-rtl/           SystemVerilog RTL (ALU first, CPU modules later)
+rtl/           Single-cycle CPU and integer ALU
 tb/            Simulation testbenches (Cocotb planned)
 formal/        Properties and SymbiYosys configurations
 docs/          Learning roadmap and verification notes
 bugs/          Counterexample write-ups and mutations (planned)
-sw/            RV32I assembly tests (planned)
+sw/            RV32I assembly smoke program
 ```
 
 ## References

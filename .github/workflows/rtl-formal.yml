@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   alu:
-    name: ALU lint / simulation / formal / toolchain
+    name: Core smoke test / ALU simulation and formal / toolchain
     runs-on: ubuntu-24.04
     timeout-minutes: 25
     steps:
@@ -35,6 +35,8 @@ jobs:
         run: make lint
       - name: Directed ALU simulation and waveform
         run: make sim-alu
+      - name: Single-cycle CPU executes alu_smoke.S
+        run: make sim-cpu
       - name: ALU formal properties
         run: make formal-alu
       - name: RV32I assembler smoke test
