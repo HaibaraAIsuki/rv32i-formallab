@@ -18,6 +18,7 @@ lint:
 	$(VERILATOR) --lint-only --sv -Wall --top-module alu rtl/alu.sv
 
 sim-alu:
+	mkdir -p build/obj_dir
 	$(VERILATOR) --binary --trace --timing -Wall --top-module tb_alu --Mdir build/obj_dir tb/tb_alu.sv rtl/alu.sv
 	./build/obj_dir/Vtb_alu
 
