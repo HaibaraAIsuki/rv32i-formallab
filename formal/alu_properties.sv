@@ -15,7 +15,8 @@ module alu_properties;
             4'd4: assert (result == (a ^ b));
             4'd5: assert (result == (a << b[4:0]));
             4'd6: assert (result == (a >> b[4:0]));
-            4'd7: assert (result == ($signed(a) >>> b[4:0]));
+            // Keep the comparison signed so SRA replicates the sign bit.
+            4'd7: assert ($signed(result) == ($signed(a) >>> b[4:0]));
             4'd8: assert (result == {31'b0, ($signed(a) < $signed(b))});
             4'd9: assert (result == {31'b0, (a < b)});
             default: assert (result == 32'b0);
